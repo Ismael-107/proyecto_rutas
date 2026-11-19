@@ -5,6 +5,11 @@
      padding: 1rem;
      margin: -1rem;
 }
+.menu{
+    background-color: aliceblue;
+    padding: 1rem;
+    margin: 1rem;
+}
 .rutas{
     display: flex;
     background-color: aliceblue;

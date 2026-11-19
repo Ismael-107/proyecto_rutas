@@ -1,7 +1,8 @@
 
 import { tipo, rutas } from "./datos.js";
 
-const contenedor = document.getElementById("listado-rutas");
+const contenedor = document.querySelector("listado-rutas");
+
 
 rutas.forEach(ruta => {
     const categoria = tipo.find(t => t.id === ruta.tipoId);
