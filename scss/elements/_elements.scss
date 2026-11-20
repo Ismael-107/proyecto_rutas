@@ -1,0 +1,35 @@
+
+/* Estilo de las etiquetas nuevas */
+
+body {
+  font-family: var(--descripcion-ruta-font-family);
+  font-size: var(--descripcion-ruta-font-size);
+  color: var(--color-on-text);
+  background-color: var(--color-on-background);
+}
+
+h1 {
+  font-family: var(--titulo-font-family);
+  font-size: var(--titulo-font-size);
+}
+
+h2 {
+  font-family: var(--titulo-de-la-ruta-font-family);
+  font-size: var(--titulo-de-la-ruta-font-size);
+}
+
+p {
+  font-family: var(--descripcion-ruta-font-family);
+  font-size: var(--descripcion-ruta-font-size);
+}
+
+button {
+  font-family: var(--boton-font-family);
+  font-size: var(--boton-font-size);
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}

@@ -1,41 +1,213 @@
-.cabecera {
-    display: flex;
-    justify-content: space-between;
-     background-color: plum;
-     padding: 1rem;
-     margin: -1rem;
-}
-.menu{
-    background-color: aliceblue;
-    padding: 1rem;
-    margin: 1rem;
-}
-.rutas{
-    display: flex;
-    background-color: aliceblue;
-    padding: 1rem;
-    margin: 1rem;
-    justify-content: space-around;
-}
-img{
-    width: 5rem;
-    height: 5rem;
-    transition: 1s ease;
-}
-.mapa{
-    width: 40rem;
-    height: 40rem;
+/* 1. SETTINGS */
+:root {
+  color-scheme: light dark;
+  /*Colores del sistema*/
+  /* Modo claro */
+  --primitive-primary-light: #BE81CA;
+  --primitive-color-on-text-light: #000000;
+  --primitive-color-on-background-light: #C9C9C9;
+  --primitive-color-on-surface-button-light: #234428;
+  --primitive-color-on-button-light: #72A779;
+  --primitive-color-on-error-light: #F0D600;
+  --primitive-color-on-surface-error-light: #B1A800;
+  --primitive-color-on-border-light: #93639B;
+  --primitive-color-on-accessibility-light: #7AEDEB;
+  --primitive-color-on-easy-path-light: #96FE6F;
+  --primitive-color-on-medium-path-light: #FDEF6E;
+  --primitive-color-on-hard-path-light: #FD3F42;
+  /* Modo oscuro */
+  --primitive-primary-dark: #813B8C;
+  --primitive-color-on-text-dark: #FFFFFF;
+  --primitive-color-on-background-dark: #595959;
+  --primitive-color-on-surface-button-dark: #476B4C;
+  --primitive-color-on-button-dark: #234428;
+  --primitive-color-on-error-dark: #5F5807;
+  --primitive-color-on-surface-error-dark: #AFA000;
+  --primitive-color-on-border-dark: #A44AB2;
+  --primitive-color-on-accessibility-dark: #65F5FD;
+  --primitive-color-on-easy-path-dark: #81FD65;
+  --primitive-color-on-medium-path-dark: #FDF865;
+  --primitive-color-on-hard-path-dark: #FD1B1E;
+  /*Cambio de color entre ligth y dark*/
+  --primary: light-dark(
+    var(--primitive-primary-light),
+    var(--primitive-primary-dark)
+  );
+  --color-on-text: light-dark(
+    var(--primitive-color-on-text-light),
+    var(--primitive-color-on-text-dark)
+  );
+  --color-on-background: light-dark(
+    var(--primitive-color-on-background-light),
+    var(--primitive-color-on-background-dark)
+  );
+  --color-on-surface-button: light-dark(
+    var(--primitive-color-on-surface-button-light),
+    var(--primitive-color-on-surface-button-dark)
+  );
+  --color-on-button: light-dark(
+    var(--primitive-color-on-button-light),
+    var(--primitive-color-on-button-dark)
+  );
+  --color-on-error: light-dark(
+    var(--primitive-color-on-error-light),
+    var(--primitive-color-on-error-dark)
+  );
+  --color-on-surface-error: light-dark(
+    var(--primitive-color-on-surface-error-light),
+    var(--primitive-color-on-surface-error-dark)
+  );
+  --color-on-border: light-dark(
+    var(--primitive-color-on-border-light),
+    var(--primitive-color-on-border-dark)
+  );
+  --color-on-accessibility: light-dark(
+    var(--primitive-color-on-accessibility-light),
+    var(--primitive-color-on-accessibility-dark)
+  );
+  --color-on-easy-path: light-dark(
+    var(--primitive-color-on-easy-path-light),
+    var(--primitive-color-on-easy-path-dark)
+  );
+  --color-on-medium-path: light-dark(
+    var(--primitive-color-on-medium-path-light),
+    var(--primitive-color-on-medium-path-dark)
+  );
+  --color-on-hard-path: light-dark(
+    var(--primitive-color-on-hard-path-light),
+    var(--primitive-color-on-hard-path-dark)
+  );
+  /*Las tipogradias que usaremos con sus nombres y rem siendo 1 rem de 16px*/
+  --titulo-de-la-ruta-font-family: "Konkhmer Sleokchher", sans-serif;
+  --titulo-de-la-ruta-font-size: 2rem;
+  --descripcion-ruta-font-family: "Kokoro", sans-serif;
+  --descripcion-ruta-font-size: 1.25rem;
+  --texto-tiempo-y-distancia-font-family: "Konkhmer Sleokchher", sans-serif;
+  --texto-tiempo-y-distancia-font-size: 2.5rem;
+  --boton-font-family: "Konkhmer Sleokchher", sans-serif;
+  --boton-font-size: 2.25rem;
+  --titulo-font-family: "Momo Trust Display", sans-serif;
+  --titulo-font-size: 3rem;
+  --letra-para-enunciar-font-family: "Kokoro", sans-serif;
+  --letra-para-enunciar-font-size: 1.5rem;
+  /*tokens de los espacios 1rem 16px*/
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 0.75rem;
+  --spacing-base: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+  --spacing-4xl: 5rem;
+  /*tokes de radio para cada uso*/
+  --radius-button: 100%;
+  --radius-image: 50%;
+  --radius-card: 25%;
+  /*no uso elevacion*/
 }
 
-@media screen and (max-width:200px){
-    img{width: 3rem;
-    height: 3rem;
-transition: 1s ease;}
-    
+/* 2. GENERIC */
+/* Resetea los estilos default de la pagina  */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-.rutas_recomendada{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    padding: 30px;
+
+html {
+  scroll-behavior: smooth;
 }
+
+body {
+  min-height: 100vh;
+}
+
+img,
+picture,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+/* 3. ELEMENTS */
+/* Estilo de las etiquetas nuevas */
+body {
+  font-family: var(--descripcion-ruta-font-family);
+  font-size: var(--descripcion-ruta-font-size);
+  color: var(--color-on-text);
+  background-color: var(--color-on-background);
+}
+
+h1 {
+  font-family: var(--titulo-font-family);
+  font-size: var(--titulo-font-size);
+}
+
+h2 {
+  font-family: var(--titulo-de-la-ruta-font-family);
+  font-size: var(--titulo-de-la-ruta-font-size);
+}
+
+p {
+  font-family: var(--descripcion-ruta-font-family);
+  font-size: var(--descripcion-ruta-font-size);
+}
+
+button {
+  font-family: var(--boton-font-family);
+  font-size: var(--boton-font-size);
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* 4. OBJECTS */
+.o-container {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: var(--spacing-base);
+}
+
+/*Cuadricula para poner las cosas en orden*/
+/*2 cuadrados por fila*/
+.o-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-base);
+}
+
+/*3 cuadrados por fila*/
+.o-grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/*automatico hasta rellenar*/
+.o-grid--auto {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+/*# sourceMappingURL=main.css.map */
