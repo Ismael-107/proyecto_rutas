@@ -325,6 +325,7 @@ if (formulario) {
 
     }
 
+    
     formulario.addEventListener("submit", function (evento) {
         evento.preventDefault();
 
@@ -336,8 +337,9 @@ if (formulario) {
         let primerCampoIncorrecto = null;
 
         campos.forEach(function (campo) {
+            const valido = validarCampo(campo);
 
-            if (!validarCampo(campo)) {
+            if (!valido) {
                 formularioValido = false;
 
                 if (!primerCampoIncorrecto) {
@@ -349,12 +351,11 @@ if (formulario) {
         if (!formularioValido) {
 
             primerCampoIncorrecto.focus();
-            primerCampoIncorrecto.reportValidity();
-
             return;
         }
 
         const nuevaSolicitud = {
+
             nombre: nombre.value.trim(),
             email: email.value.trim(),
             telefono: telefono.value.trim(),
@@ -371,7 +372,6 @@ if (formulario) {
             nuevaSolicitud.nombre,
             nuevaSolicitud.email
         );
-
         guardarMensajes(mensajes);
 
         formulario.reset();
@@ -379,16 +379,22 @@ if (formulario) {
 
         campos.forEach(function (campo) {
             campo.removeAttribute("aria-invalid");
+
+            const cajaError = document.querySelector(`#${campo.id}-error`);
+
+            if (cajaError) {
+                cajaError.textContent = "";
+            }
         });
 
         telefono.setCustomValidity("");
-
         contador.textContent = "0 / 500 caracteres";
 
         mostrarMensajes();
         recuperarDatosUsuario();
 
     });
+
     mostrarMensajes();
     recuperarDatosUsuario();
 

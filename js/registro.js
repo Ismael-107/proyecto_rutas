@@ -93,21 +93,21 @@ function mostrarError(campo, texto) {
 
 function validarTodo() {
     let primerCampoIncorrecto = null;
+
     for (const [campo, validar] of campos) {
         campo.dataset.tocado = 'true';
 
         const error = comprobar(campo, validar);
-
         if (error && !primerCampoIncorrecto) {
             primerCampoIncorrecto = campo;
         }
     }
+
     if (primerCampoIncorrecto) {
         primerCampoIncorrecto.focus();
     }
     return primerCampoIncorrecto === null;
 }
-
 
 
   function limpiarErrores() {

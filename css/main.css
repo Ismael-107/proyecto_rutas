@@ -275,7 +275,17 @@ margin-right: 1rem;
     justify-self: center;
 }
 
-.error { color: #b3261e; font-size: 0.9rem; margin: 0.25rem 0 0; }
-.error:empty { display: none; }
-[aria-invalid="true"] { border: 2px solid #b3261e; }
+.error {
+    color: #b3261e;
+    font-size: 0.9rem;
+    margin: 0.25rem 0 0;
+}
+
+.error:empty {
+    display: none;
+}
+
+[aria-invalid="true"] {
+    border: 2px solid #b3261e;
+}
 /*# sourceMappingURL=main.css.map */
