@@ -1,11 +1,11 @@
-// js/validacion.js
-// Cada función recibe un valor y devuelve un mensaje de error o null.
+//js/validacion.js
+//Cada función recibe un valor y devuelve un mensaje de error o null.
 
 export const EDAD_MINIMA = 16; // cámbiala si tu app necesita otra edad
 
 const RE_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-// true si el valor está vacío o solo tiene espacios
+//true si el valor está vacio o solo tiene espacios
 const vacio = (v) => String(v ?? '').trim() === '';
 
 export function validarUsuario(valor, { min = 3, max = 20 } = {}) {
@@ -34,7 +34,7 @@ export function validarRepetirPassword(valor, password) {
   return valor === password ? null : 'Las contraseñas no coinciden.';
 }
 
-// Convierte 'AAAA-MM-DD' en un objeto Date. Devuelve null si la fecha no existe.
+//Convierte 'AAAA-MM-DD' en un objeto Date. Devuelve null si la fecha no existe.
 export function aFecha(iso) {
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso ?? '');
   if (!m) return null;
@@ -43,7 +43,7 @@ export function aFecha(iso) {
   return f.getFullYear() === a && f.getMonth() === mes - 1 && f.getDate() === d ? f : null;
 }
 
-// Años cumplidos a fecha de hoy
+//Años cumplidos a fecha de hoy
 export function calcularEdad(fecha, hoy = new Date()) {
   let edad = hoy.getFullYear() - fecha.getFullYear();
   const aunNoCumplidos =
