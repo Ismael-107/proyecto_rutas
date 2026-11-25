@@ -97,3 +97,25 @@ function validarTelefono() {
 }
 
 telefono.addEventListener("input", validarTelefono);
+
+const llamada = document.querySelector("#f_llamada");
+
+function validarLlamada() {
+
+    if (llamada.checked && telefono.value.trim() === "") {
+
+        telefono.setCustomValidity(
+            "Debes introducir un teléfono si prefieres que te llamemos."
+        );
+
+        return false;
+    }
+
+    telefono.setCustomValidity("");
+
+    return validarTelefono();
+}
+
+llamada.addEventListener("change", validarLlamada);
+
+telefono.addEventListener("input", validarLlamada);
