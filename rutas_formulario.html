@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script type="module" src="./js/main.js"></script>
+  <script type="module" src="./js/registro.js"></script>
 </head>
 <body>
     <header>
@@ -15,23 +18,49 @@
     <main>
         <h1>Ruta de la semana cercana</h1>
             <p>Te mandaremos la ruta mas cercana y popular de esta semana para que la realices</p>
-        <form action="#" method="post">
+        <form id="formulario-ruta">
 
-            <label for="nombre">Nombre:</label>
+            <label for="f_nombre">Nombre:</label>
             <input type="text" id="f_nombre" name="nombre" required>
 
             <br><br>
 
-            <label for="email">Correo electrónico:</label>
+            <label for="f_email">Correo electrónico:</label>
             <input type="email" id="f_email" name="email" required>
 
             <br><br>
 
-            <label for="telefono">telefono</label>
-            <input type="text" id="f_telefono" name="usuario">
+            <label for="f_telefono">Teléfono (opcional):</label>
+            <input type="tel" id="f_telefono" name="telefono">
 
             <br><br>
-            <button type="submit">Seguir</button>
+
+            <label for="f_motivo">Motivo de la solicitud:</label>
+            <select id="f_motivo" name="motivo" required>
+                <option value="">Selecciona un motivo</option>
+                <option value="recibir-ruta">Recibir la ruta semanal</option>
+                <option value="proponer-ruta">Proponer una ruta</option>
+                <option value="consultar-ruta">Consultar información sobre rutas</option>
+                <option value="otro">Otro motivo</option>
+            </select>
+
+            <br><br>
+
+            <label for="f_mensaje">Mensaje:</label>
+            <textarea id="f_mensaje" name="mensaje"
+                placeholder="Escribe aquí tu mensaje..."
+                required></textarea>
+
+            <br><br>
+
+            <label>
+                <input type="checkbox" id="f_llamada" name="llamada">
+                Prefiero que me llaméis
+            </label>
+
+            <br><br>
+
+            <button type="submit">Enviar solicitud</button>
 
         </form>
     </main>
