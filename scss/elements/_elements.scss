@@ -26,7 +26,12 @@ p {
 button {
   font-family: var(--boton-font-family);
   font-size: var(--boton-font-size);
+  background-color: var(--primitive-color-on-button-light);
   cursor: pointer;
+  border: 0.5rem solid var(--primitive-color-on-button-dark);
+  border-radius: 48px;
+  padding: 0.5rem;
+
 }
 
 img {

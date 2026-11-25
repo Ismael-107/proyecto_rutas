@@ -155,28 +155,41 @@ body {
   font-family: var(--descripcion-ruta-font-family);
   font-size: var(--descripcion-ruta-font-size);
   color: var(--color-on-text);
-  background-color: var(--color-on-background);
+  background-color: var(--primitive-color-on-background-light);
+}
+
+main{
+  margin: 3rem;
 }
 
 h1 {
   font-family: var(--titulo-font-family);
   font-size: var(--titulo-font-size);
+  color: var(--color-on-text);
 }
 
 h2 {
   font-family: var(--titulo-de-la-ruta-font-family);
   font-size: var(--titulo-de-la-ruta-font-size);
+  color: var(--color-on-text);
 }
 
 p {
   font-family: var(--descripcion-ruta-font-family);
   font-size: var(--descripcion-ruta-font-size);
+  color: var(--color-on-text);
+
 }
 
 button {
   font-family: var(--boton-font-family);
   font-size: var(--boton-font-size);
+  background-color: var(--primitive-color-on-button-light);
   cursor: pointer;
+  border: 0.5rem solid var(--primitive-color-on-button-dark);
+  border-radius: 48px;
+  padding: 0.5rem;
+
 }
 
 img {
@@ -185,7 +198,7 @@ img {
 }
 
 /* 4. OBJECTS */
-.o-container {
+.o-contenedor {
   width: 100%;
   max-width: 1200px;
   margin-inline: auto;
@@ -209,9 +222,60 @@ img {
 .o-grid--auto {
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
-.o-stack {
+
+.grid{
+  display: grid;
+  grid-template-columns: repeat(2,1fr 2fr);
+  height: 300px;
+  width: 200px;
+}
+
+.cabecera {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: var(--primitive-primary-light);
 }
+
+.menu{
+margin-left: auto;
+margin-top: auto;
+margin-bottom: auto;
+}
+
+.menu_dentro{
+color: var(--primitive-color-on-text-light);
+background-color: var(--primitive-color-on-button-light);
+padding: 1rem;
+border: 0.5rem solid var(--primitive-color-on-button-dark);
+border-radius: 48px;
+margin-right: 1rem;
+}
+
+.rutas{
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1rem;
+  justify-content: space-around;
+  background-color: var(--primitive-color-on-border-light);
+}
+
+.img_mapa{
+  max-width: 90%;
+  max-height: 90%;
+  height: 75%;
+  width: 75%;
+}
+
+.flex_centro{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-self: center;
+}
+
+.error { color: #b3261e; font-size: 0.9rem; margin: 0.25rem 0 0; }
+.error:empty { display: none; }
+[aria-invalid="true"] { border: 2px solid #b3261e; }
 /*# sourceMappingURL=main.css.map */
