@@ -69,3 +69,31 @@ export function validarFechaNacimiento(valor, edadMinima = EDAD_MINIMA) {
 export function validarCondiciones(aceptadas) {
   return aceptadas ? null : 'Debes aceptar los términos y condiciones.';
 }
+
+const formulario = document.querySelector("#formulario-ruta");
+
+const telefono = document.querySelector("#f_telefono");
+
+function validarTelefono() {
+
+    const numero = telefono.value.replace(/[\s-]/g, "");
+
+    const regexTelefono = /^(?:\+34)?[6789]\d{8}$/;
+
+    if (numero === "") {
+        telefono.setCustomValidity("");
+        return true;
+    }
+
+    if (!regexTelefono.test(numero)) {
+        telefono.setCustomValidity(
+            "Introduce un teléfono español válido."
+        );
+        return false;
+    }
+
+    telefono.setCustomValidity("");
+    return true;
+}
+
+telefono.addEventListener("input", validarTelefono);
