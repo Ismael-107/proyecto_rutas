@@ -1,0 +1,6 @@
+// objects/_stack.scss: elementos uno debajo de otro
+.o-stack {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}

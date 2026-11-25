@@ -89,5 +89,21 @@ export const rutas = [
     tiempo: 2,
     dificultad: 3,
     tipoId: 5
+  },
+  {
+    id: 11,
+    nombre: "Arena monto naranja",
+    distancia: 15,
+    tiempo: 2,
+    dificultad: 1,
+    tipoId: 5
+  },
+  {
+    id: 12,
+    nombre: "Arena mojada",
+    distancia: 22,
+    tiempo: 4,
+    dificultad: 1,
+    tipoId: 5
   }
 ];

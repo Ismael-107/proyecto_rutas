@@ -51,7 +51,6 @@ if (contenedor) {
             <p><strong>Duración:</strong> ${ruta.tiempo} horas</p>
             <p><strong>Dificultad:</strong> ${ruta.dificultad}/3</p>
         `;
-
         contenedor.appendChild(tarjeta);
     });
 
