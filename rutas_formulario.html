@@ -21,38 +21,43 @@
         <form id="formulario-ruta" novalidate>
 
             <label for="f_nombre">Nombre:</label>
-            <input type="text" id="f_nombre" name="nombre" required>
-
+            <input type="text" id="f_nombre" name="nombre"
+                required aria-describedby="f_nombre-error">
+            <p class="error" id="f_nombre-error"></p>
             <br><br>
 
             <label for="f_email">Correo electrónico:</label>
-            <input type="email" id="f_email" name="email" required>
+            <input type="email" id="f_email" name="email"
+                required aria-describedby="f_email-error">
+            <p class="error" id="f_email-error"></p>
 
             <br><br>
 
             <label for="f_telefono">Teléfono (opcional):</label>
-            <input type="tel" id="f_telefono" name="telefono">
+            <input type="tel" id="f_telefono" name="telefono"
+                aria-describedby="f_telefono-error">
+            <p class="error" id="f_telefono-error"></p>
 
             <br><br>
 
             <label for="f_motivo">Motivo de la solicitud:</label>
-            <select id="f_motivo" name="motivo" required>
+            <select id="f_motivo" name="motivo" required
+                    aria-describedby="f_motivo-error">
                 <option value="">Selecciona un motivo</option>
                 <option value="recibir-ruta">Recibir la ruta semanal</option>
                 <option value="proponer-ruta">Proponer una ruta</option>
                 <option value="consultar-ruta">Consultar información sobre rutas</option>
                 <option value="otro">Otro motivo</option>
             </select>
+            <p class="error" id="f_motivo-error"></p>
 
             <br><br>
-
             <label for="f_mensaje">Mensaje:</label>
-
-            <textarea
-                id="f_mensaje" name="mensaje" minlength="10"
-                maxlength="500" placeholder="Escribe aquí tu mensaje..." required>
-            </textarea>
-
+            <textarea id="f_mensaje" name="mensaje"
+                    minlength="10" maxlength="500" required
+                    aria-describedby="f_mensaje-error contador-mensaje"
+                    placeholder="Escribe aquí tu mensaje..."></textarea>
+            <p class="error" id="f_mensaje-error"></p>
             <p id="contador-mensaje">0 / 500 caracteres</p>
 
             <br><br>

@@ -38,11 +38,19 @@ if (form) {
     localStorage.setItem(CLAVE, JSON.stringify(usuarios));
   }
 
-  function mostrarError(campo, texto) {
+
+function mostrarError(campo, texto) {
     const caja = document.querySelector(`#${campo.id}-error`);
-    campo.setAttribute('aria-invalid', texto ? 'true' : 'false');
-    if (caja) caja.textContent = texto || '';
-  }
+    if (texto) {
+        campo.setAttribute('aria-invalid', 'true');
+    } else {
+        campo.setAttribute('aria-invalid', 'false');
+    }
+    if (caja) {
+        caja.textContent = texto || '';
+    }
+}
+
 
   const campos = [
     [usuario, () => v.validarUsuario(usuario.value, {
@@ -81,15 +89,26 @@ if (form) {
     if (confirmar.dataset.tocado) comprobar(confirmar, campos[3][1]);
   });
 
-  function validarTodo() {
-    let primerCampo = null;
+  
+
+function validarTodo() {
+    let primerCampoIncorrecto = null;
     for (const [campo, validar] of campos) {
-      campo.dataset.tocado = 'true';
-      if (comprobar(campo, validar) && !primerCampo) primerCampo = campo;
+        campo.dataset.tocado = 'true';
+
+        const error = comprobar(campo, validar);
+
+        if (error && !primerCampoIncorrecto) {
+            primerCampoIncorrecto = campo;
+        }
     }
-    if (primerCampo) primerCampo.focus();
-    return primerCampo === null;
-  }
+    if (primerCampoIncorrecto) {
+        primerCampoIncorrecto.focus();
+    }
+    return primerCampoIncorrecto === null;
+}
+
+
 
   function limpiarErrores() {
     campos.forEach(([campo]) => {

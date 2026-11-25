@@ -69,213 +69,327 @@ export function validarFechaNacimiento(valor, edadMinima = EDAD_MINIMA) {
 export function validarCondiciones(aceptadas) {
   return aceptadas ? null : 'Debes aceptar los términos y condiciones.';
 }
+export function configurarEventosValidacion(campos, validarCampo) {
 
-//Aqui empieza la validacion
+  const camposTocados = new Set();
+
+  campos.forEach(campo => {
+
+    campo.addEventListener("blur", () => {
+        camposTocados.add(campo);
+        validarCampo(campo);
+
+      });
+
+      campo.addEventListener("input", () => {
+          if (camposTocados.has(campo)) {
+              validarCampo(campo);
+          }
+    });
+  });
+}
+//Aqui empieza la validacion de ruta formulario
+
 const formulario = document.querySelector("#formulario-ruta");
 
-const telefono = document.querySelector("#f_telefono");
+if (formulario) {
 
-function validarTelefono() {
+    const nombre = document.querySelector("#f_nombre");
+    const email = document.querySelector("#f_email");
+    const telefono = document.querySelector("#f_telefono");
+    const llamada = document.querySelector("#f_llamada");
+    const motivo = document.querySelector("#f_motivo");
+    const mensaje = document.querySelector("#f_mensaje");
+    const contador = document.querySelector("#contador-mensaje");
+    const listaMensajes = document.querySelector("#lista-mensajes");
 
-    const numero = telefono.value.replace(/[\s-]/g, "");
+    const camposTocados = new Set();
 
-    const regexTelefono = /^(?:\+34)?[6789]\d{8}$/;
+    const campos = [
+        nombre,
+        email,
+        telefono,
+        motivo,
+        mensaje
+    ].filter(Boolean);
 
-    if (numero === "") {
+
+
+    function validarTelefono() {
+
+        const numero = telefono.value.replace(/[\s-]/g, "");
+
+        const regexTelefono = /^(?:\+34)?[6789]\d{8}$/;
+
+        if (numero === "") {
+
+            if (llamada.checked) {
+                telefono.setCustomValidity(
+                    "Debes introducir un teléfono si prefieres que te llamemos."
+                );
+                return false;
+            }
+
+            telefono.setCustomValidity("");
+            return true;
+        }
+
+        if (!regexTelefono.test(numero)) {
+
+            telefono.setCustomValidity(
+                "Introduce un teléfono español válido."
+            );
+
+            return false;
+        }
+
         telefono.setCustomValidity("");
         return true;
     }
 
-    if (!regexTelefono.test(numero)) {
-        telefono.setCustomValidity(
-            "Introduce un teléfono español válido."
-        );
-        return false;
+
+
+    
+    function validarCampo(campo) {
+        if (campo === telefono) {
+            validarTelefono();
+        }
+
+        const valido = campo.checkValidity();
+        const cajaError = document.querySelector(`#${campo.id}-error`);
+        campo.setAttribute("aria-invalid", valido ? "false" : "true");
+
+        if (cajaError) {
+            cajaError.textContent = valido ? "" : campo.validationMessage;
+        }
+        return valido;
     }
 
-    telefono.setCustomValidity("");
-    return true;
-}
-
-telefono.addEventListener("input", validarTelefono);
-
-const llamada = document.querySelector("#f_llamada");
-
-function validarLlamada() {
-
-    if (llamada.checked && telefono.value.trim() === "") {
-
-        telefono.setCustomValidity(
-            "Debes introducir un teléfono si prefieres que te llamemos."
-        );
-
-        return false;
-    }
-
-    telefono.setCustomValidity("");
-
-    return validarTelefono();
-}
-
-llamada.addEventListener("change", validarLlamada);
-
-telefono.addEventListener("input", validarLlamada);
-
-const mensaje = document.querySelector("#f_mensaje");
-const contador = document.querySelector("#contador-mensaje");
-
-mensaje.addEventListener("input", function () {
-
-    const longitud = mensaje.value.length;
-
-    contador.textContent = longitud + " / 500 caracteres";
-
-});
 
 
-const listaMensajes = document.querySelector("#lista-mensajes");
 
-function obtenerMensajes() {
+    campos.forEach(function (campo) {
+        campo.addEventListener("blur", function () {
 
-    return JSON.parse(localStorage.getItem("mensajesRutas")) || [];
-
-}
-
-function guardarMensajes(mensajes) {
-
-    localStorage.setItem("mensajesRutas", JSON.stringify(mensajes));
-
-}
-
-function mostrarMensajes() {
-
-    const mensajes = obtenerMensajes();
-
-    listaMensajes.replaceChildren();
-
-    if (mensajes.length === 0) {
-
-        const texto = document.createElement("p");
-        texto.textContent = "Todavía no has enviado ninguna solicitud.";
-
-        listaMensajes.appendChild(texto);
-        return;
-    }
-
-    mensajes.forEach(function (mensaje, indice) {
-
-        const tarjeta = document.createElement("article");
-
-        const titulo = document.createElement("h3");
-        titulo.textContent = mensaje.motivo;
-
-        const nombre = document.createElement("p");
-        nombre.textContent = "Nombre: " + mensaje.nombre;
-
-        const correo = document.createElement("p");
-        correo.textContent = "Correo: " + mensaje.email;
-
-        const texto = document.createElement("p");
-        texto.textContent = "Mensaje: " + mensaje.mensaje;
-
-        const boton = document.createElement("button");
-        boton.type = "button";
-        boton.textContent = "Borrar";
-
-        boton.addEventListener("click", function () {
-
-            const mensajesActualizados = obtenerMensajes();
-            mensajesActualizados.splice(indice, 1);
-
-            guardarMensajes(mensajesActualizados);
-            mostrarMensajes();
-
+            camposTocados.add(campo);
+            validarCampo(campo);
         });
 
-        tarjeta.append(titulo, nombre, correo, texto, boton);
-        listaMensajes.appendChild(tarjeta);
+        campo.addEventListener("input", function () {
+
+            if (camposTocados.has(campo)) {
+                validarCampo(campo);
+            }
+        });
+    });
+
+
+    llamada.addEventListener("change", function () {
+
+        camposTocados.add(telefono);
+        validarCampo(telefono);
 
     });
 
-}
 
-formulario.addEventListener("submit", function (evento) {
 
-    evento.preventDefault();
+    mensaje.addEventListener("input", function () {
 
-    if (!validarTelefono() || !validarLlamada()) {
-        telefono.reportValidity();
-        return;
+        const longitud = mensaje.value.length;
+
+        contador.textContent = longitud + " / 500 caracteres";
+
+    });
+
+
+    const CLAVE_MENSAJES = "mensajesRutas";
+
+    function obtenerMensajes() {
+
+        try {
+            return JSON.parse(localStorage.getItem(CLAVE_MENSAJES)) || [];
+        } catch {
+            return [];
+        }
+
     }
 
-    if (!formulario.reportValidity()) {
-        return;
+    function guardarMensajes(mensajes) {
+
+        localStorage.setItem(
+            CLAVE_MENSAJES,
+            JSON.stringify(mensajes)
+        );
     }
 
-    const nuevaSolicitud = {
-        nombre: document.querySelector("#f_nombre").value.trim(),
 
-        email: document.querySelector("#f_email").value.trim(),
 
-        telefono: telefono.value.trim(),
+    function mostrarMensajes() {
 
-        motivo: document.querySelector("#f_motivo").selectedOptions[0].textContent,
+        const mensajes = obtenerMensajes();
 
-        mensaje: mensaje.value.trim(),
+        listaMensajes.replaceChildren();
 
-        llamada: llamada.checked
-    };
+        if (mensajes.length === 0) {
 
-    const mensajes = obtenerMensajes();
-    mensajes.push(nuevaSolicitud);
+            const texto = document.createElement("p");
+            texto.textContent = "Todavía no has enviado ninguna solicitud.";
 
-    guardarDatosUsuario(
-    nuevaSolicitud.nombre,
-    nuevaSolicitud.email
-    );    
-    guardarMensajes(mensajes);
-    formulario.reset();
+            listaMensajes.appendChild(texto);
+            return;
+        }
 
-    contador.textContent = "0 / 500 caracteres";
+        mensajes.forEach(function (mensajeGuardado, indice) {
+
+            const tarjeta = document.createElement("article");
+
+            const titulo = document.createElement("h3");
+            titulo.textContent = mensajeGuardado.motivo;
+
+            const nombreMensaje = document.createElement("p");
+            nombreMensaje.textContent = "Nombre: " + mensajeGuardado.nombre;
+
+            const correo = document.createElement("p");
+            correo.textContent = "Correo: " + mensajeGuardado.email;
+
+            const textoMensaje = document.createElement("p");
+            textoMensaje.textContent = "Mensaje: " + mensajeGuardado.mensaje;
+
+            const boton = document.createElement("button");
+            boton.type = "button";
+            boton.textContent = "Borrar";
+
+            boton.addEventListener("click", function () {
+
+                const mensajesActualizados = obtenerMensajes();
+
+                mensajesActualizados.splice(indice, 1);
+
+                guardarMensajes(mensajesActualizados);
+                mostrarMensajes();
+
+            });
+
+            tarjeta.append(
+                titulo,
+                nombreMensaje,
+                correo,
+                textoMensaje,
+                boton
+            );
+
+            listaMensajes.appendChild(tarjeta);
+      });
+    }
+
+
+    const CLAVE_USUARIO = "usuarioRuta";
+    const DURACION = 30 * 24 * 60 * 60 * 1000;
+
+    function guardarDatosUsuario(nombreUsuario, correoUsuario) {
+        const datos = {
+            nombre: nombreUsuario,
+            email: correoUsuario,
+            caducidad: Date.now() + DURACION
+        };
+
+        localStorage.setItem(
+            CLAVE_USUARIO,
+            JSON.stringify(datos)
+        );
+
+    }
+
+    function recuperarDatosUsuario() {
+        const datosGuardados = localStorage.getItem(CLAVE_USUARIO);
+
+        if (!datosGuardados) {
+            return;
+        }
+
+        let datos;
+        try {
+            datos = JSON.parse(datosGuardados);
+        } catch {
+            localStorage.removeItem(CLAVE_USUARIO);
+            return;
+        }
+
+        if (Date.now() > datos.caducidad) {
+            localStorage.removeItem(CLAVE_USUARIO);
+            return;
+
+        }
+        nombre.value = datos.nombre;
+        email.value = datos.email;
+
+    }
+
+    formulario.addEventListener("submit", function (evento) {
+        evento.preventDefault();
+
+        campos.forEach(function (campo) {
+            camposTocados.add(campo);
+        });
+
+        let formularioValido = true;
+        let primerCampoIncorrecto = null;
+
+        campos.forEach(function (campo) {
+
+            if (!validarCampo(campo)) {
+                formularioValido = false;
+
+                if (!primerCampoIncorrecto) {
+                    primerCampoIncorrecto = campo;
+                }
+            }
+        });
+
+        if (!formularioValido) {
+
+            primerCampoIncorrecto.focus();
+            primerCampoIncorrecto.reportValidity();
+
+            return;
+        }
+
+        const nuevaSolicitud = {
+            nombre: nombre.value.trim(),
+            email: email.value.trim(),
+            telefono: telefono.value.trim(),
+            motivo: motivo.selectedOptions[0].textContent,
+            mensaje: mensaje.value.trim(),
+            llamada: llamada.checked
+
+        };
+
+        const mensajes = obtenerMensajes();
+        mensajes.push(nuevaSolicitud);
+
+        guardarDatosUsuario(
+            nuevaSolicitud.nombre,
+            nuevaSolicitud.email
+        );
+
+        guardarMensajes(mensajes);
+
+        formulario.reset();
+        camposTocados.clear();
+
+        campos.forEach(function (campo) {
+            campo.removeAttribute("aria-invalid");
+        });
+
+        telefono.setCustomValidity("");
+
+        contador.textContent = "0 / 500 caracteres";
+
+        mostrarMensajes();
+        recuperarDatosUsuario();
+
+    });
     mostrarMensajes();
     recuperarDatosUsuario();
-
-});
-
-mostrarMensajes();
-const CLAVE_USUARIO = "usuarioRuta";
-const DURACION = 30 * 24 * 60 * 60 * 1000;
-
-function guardarDatosUsuario(nombre, email) {
-
-    const datos = {
-        nombre: nombre,
-        email: email,
-        caducidad: Date.now() + DURACION
-
-    };
-
-    localStorage.setItem(
-        CLAVE_USUARIO,
-        JSON.stringify(datos)
-    );
-
-}
-
-function recuperarDatosUsuario() {
-
-    const datosGuardados = localStorage.getItem(CLAVE_USUARIO);
-    if (!datosGuardados) {
-        return;
-    }
-
-    const datos = JSON.parse(datosGuardados);
-    if (Date.now() > datos.caducidad) {
-        localStorage.removeItem(CLAVE_USUARIO);
-        return;
-    }
-
-    document.querySelector("#f_nombre").value = datos.nombre;
-    document.querySelector("#f_email").value = datos.email;
 
 }
