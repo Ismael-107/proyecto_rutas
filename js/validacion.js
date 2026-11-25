@@ -229,12 +229,53 @@ formulario.addEventListener("submit", function (evento) {
     const mensajes = obtenerMensajes();
     mensajes.push(nuevaSolicitud);
 
+    guardarDatosUsuario(
+    nuevaSolicitud.nombre,
+    nuevaSolicitud.email
+    );    
     guardarMensajes(mensajes);
     formulario.reset();
 
     contador.textContent = "0 / 500 caracteres";
     mostrarMensajes();
+    recuperarDatosUsuario();
 
 });
 
 mostrarMensajes();
+const CLAVE_USUARIO = "usuarioRuta";
+const DURACION = 30 * 24 * 60 * 60 * 1000;
+
+function guardarDatosUsuario(nombre, email) {
+
+    const datos = {
+        nombre: nombre,
+        email: email,
+        caducidad: Date.now() + DURACION
+
+    };
+
+    localStorage.setItem(
+        CLAVE_USUARIO,
+        JSON.stringify(datos)
+    );
+
+}
+
+function recuperarDatosUsuario() {
+
+    const datosGuardados = localStorage.getItem(CLAVE_USUARIO);
+    if (!datosGuardados) {
+        return;
+    }
+
+    const datos = JSON.parse(datosGuardados);
+    if (Date.now() > datos.caducidad) {
+        localStorage.removeItem(CLAVE_USUARIO);
+        return;
+    }
+
+    document.querySelector("#f_nombre").value = datos.nombre;
+    document.querySelector("#f_email").value = datos.email;
+
+}
