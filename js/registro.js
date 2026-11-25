@@ -11,6 +11,17 @@ const nacimiento = document.querySelector('#fecha');
 const terminos = document.querySelector('#terminos');
 const aviso = document.querySelector('#registro-aviso');
 
+//Acceso a localStorage
+const CLAVE = 'usuarios';
+
+function leerUsuarios() {
+  return JSON.parse(localStorage.getItem(CLAVE)) || [];
+}
+
+function guardarUsuarios(lista) {
+  localStorage.setItem(CLAVE, JSON.stringify(lista));
+}
+
 //La fecha máxima es hoy: así el calendario no deja elegir fechas futuras
 nacimiento.max = new Date().toLocaleDateString('sv-SE'); // formato AAAA-MM-DD
 
@@ -81,4 +92,25 @@ form.addEventListener('submit', (e) => {
   e.preventDefault();
   if (!validarTodo()) return;
   console.log('Formulario válido');
+});
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (!validarTodo()) return;
+
+  const dato = {
+    usuario: usuario.value.trim(),
+    email: email.value.trim().toLowerCase(),
+    nacimiento: nacimiento.value,   
+    terminos: terminos.checked,      
+    
+  };
+
+  const usuarios = leerUsuarios();
+  usuarios.push({ ...dato, id: Date.now().toString() });
+  guardarUsuarios(usuarios);
+
+  form.reset();
+  limpiarErrores();
+  aviso.textContent = 'Cuenta creada correctamente.';
 });
