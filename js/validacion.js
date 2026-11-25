@@ -70,6 +70,7 @@ export function validarCondiciones(aceptadas) {
   return aceptadas ? null : 'Debes aceptar los términos y condiciones.';
 }
 
+//Aqui empieza la validacion
 const formulario = document.querySelector("#formulario-ruta");
 
 const telefono = document.querySelector("#f_telefono");
@@ -119,3 +120,14 @@ function validarLlamada() {
 llamada.addEventListener("change", validarLlamada);
 
 telefono.addEventListener("input", validarLlamada);
+
+const mensaje = document.querySelector("#f_mensaje");
+const contador = document.querySelector("#contador-mensaje");
+
+mensaje.addEventListener("input", function () {
+
+    const longitud = mensaje.value.length;
+
+    contador.textContent = longitud + " / 500 caracteres";
+
+});

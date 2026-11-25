@@ -47,9 +47,13 @@
             <br><br>
 
             <label for="f_mensaje">Mensaje:</label>
-            <textarea id="f_mensaje" name="mensaje"
-                placeholder="Escribe aquí tu mensaje..."
-                required></textarea>
+
+            <textarea
+                id="f_mensaje" name="mensaje" minlength="10"
+                maxlength="500" placeholder="Escribe aquí tu mensaje..." required>
+            </textarea>
+
+            <p id="contador-mensaje">0 / 500 caracteres</p>
 
             <br><br>
 
